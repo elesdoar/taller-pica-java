@@ -1,0 +1,51 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+    id 'com.github.gradlecommunity.jaxb2' version '0.1.0'
+}
+
+group = 'edu.upj.tb'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility=1.8
+targetCompatibility=1.8
+assert System.properties["java.specification.version"] == "1.8" || "11" || "12" || "13"
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    gradlePluginPortal()
+    jcenter()
+    maven { url "https://repo.spring.io/plugins-release" }
+}
+
+jaxb2 {
+    xjc {
+        'request-classes' {
+            basePackage = 'edu.upj.tb.tallerjava.ws.request'
+            schema = 'src/main/resources/wsdl/CreditCardService.wsdl'
+
+            additionalArgs = '-wsdl'
+
+            // output encoding of the generated files
+            encoding = 'UTF-8'
+            extension = true
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.postgresql:postgresql'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
