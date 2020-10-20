@@ -30,14 +30,14 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    # url: 'jdbc:oracle:thin:@tcps://adb.us-ashburn-1.oraclecloud.com:1522/tcmyhg61ta8ubt8_sisgeo_medium.atp.oraclecloud.com?wallet_location="${user.dir}/.tns"&oracle.net.ssl_server_cert_dn="CN=adwc.uscom-east-1.oraclecloud.com,OU=Oracle BMCS US,O=Oracle Corporation,L=Redwood City,ST=California,C=US"'
-    url: jdbc:oracle:thin:@sisgeo_medium?TNS_ADMIN=${user.dir}/.tns/
-    username: sisgeo
-    password: r6q8a7MahaEu
+    url: jdbc:postgresql://localhost:5432/taller-java
+    username: postgres
+    password: longlive
     hikari:
-      poolName: Hikari
+      poolName: Hikari-TB
       auto-commit: false
   jpa:
+    database-platform: io.github.jhipster.domain.util.FixedPostgreSQL10Dialect
     show-sql: true
     properties:
       hibernate.id.new_generator_mappings: true
@@ -45,3 +45,9 @@ spring:
       hibernate.cache.use_second_level_cache: true
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL10Dialect
+      hibernate.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+      hibernate.jdbc.time_zone: UTC-5
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
+      hibernate.ddl-auto: none
